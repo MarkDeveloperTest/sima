@@ -161,7 +161,7 @@ export function IntroSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const [ctaAvailable, setCtaAvailable] = useState(false)
   const birthday = sima.birthday.trim() || sima.birthdayFallback
-  const heroPhoto = sima.photos.find((photo) => photo.featured)
+  const introPhoto = sima.photos.find((photo) => photo.id === 'terrace-portrait')
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
@@ -246,10 +246,10 @@ export function IntroSection() {
         >
           <PhotoPlaceholder
             label={sima.hero.placeholder}
-            image={heroPhoto?.image}
+            image={introPhoto?.image}
             alt=""
             dark
-            objectPosition={heroPhoto?.objectPosition}
+            objectPosition={introPhoto?.objectPosition}
             loading="eager"
             fetchPriority="high"
             className="h-full min-h-0 w-full rounded-[1.75rem]"
@@ -355,15 +355,15 @@ export function HeroSection() {
             />
           </motion.div>
 
-          <ul className="sr-only" aria-label="Риси Сіми">
-            {sima.traits.map((trait) => (
-              <li key={trait}>{trait}</li>
+          <ul className="sr-only" aria-label="Ролі Сіми">
+            {sima.roles.map((role) => (
+              <li key={role}>{role}</li>
             ))}
           </ul>
 
-          {sima.traits.map((trait, index) => (
+          {sima.roles.map((role, index) => (
             <motion.div
-              key={trait}
+              key={role}
               aria-hidden="true"
               initial={shouldReduceMotion ? false : { opacity: 0, x: index % 2 === 0 ? -18 : 18 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -372,19 +372,19 @@ export function HeroSection() {
               className={`absolute z-20 hidden items-center gap-2 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.17em] text-ink/75 drop-shadow-[0_1px_8px_rgba(247,246,241,1)] sm:flex ${traitPositions[index]}`}
             >
               <span className="h-px w-5 bg-current opacity-35 sm:w-8" />
-              {trait}
+              {role}
             </motion.div>
           ))}
         </motion.div>
 
         <ul className="mt-8 grid grid-cols-2 border-y border-black/10 sm:hidden" role="presentation" inert>
-          {sima.traits.map((trait, index) => (
+          {sima.roles.map((role, index) => (
             <li
-              key={`mobile-${trait}`}
+              key={`mobile-${role}`}
               aria-hidden="true"
-              className={`py-3 text-[9px] font-semibold uppercase tracking-[0.14em] text-ink/60 ${index % 2 === 0 ? 'border-r border-black/10 pr-3' : 'pl-3 text-right'} ${index >= 2 ? 'border-t border-black/10' : ''} ${index === sima.traits.length - 1 ? 'col-span-2 border-r-0 text-center' : ''}`}
+              className={`py-3 text-[9px] font-semibold uppercase tracking-[0.14em] text-ink/60 ${index % 2 === 0 ? 'border-r border-black/10 pr-3' : 'pl-3 text-right'} ${index >= 2 ? 'border-t border-black/10' : ''} ${index === sima.roles.length - 1 ? 'col-span-2 border-r-0 text-center' : ''}`}
             >
-              {trait}
+              {role}
             </li>
           ))}
         </ul>

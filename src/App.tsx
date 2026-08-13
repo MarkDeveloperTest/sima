@@ -10,6 +10,8 @@ import { FaithSection, ImpactSection, LeadershipSection, MentorSection } from '.
 import { sima, type InsideJoke } from './data/sima'
 
 type SecretTrigger = InsideJoke['trigger']
+const dedicatedPhotoIds = new Set(['featured', 'terrace-portrait', 'church', 'audi'])
+const galleryPhotos = sima.photos.filter((photo) => !dedicatedPhotoIds.has(photo.id))
 
 function App() {
   const { scrollYProgress: progress } = useScroll()
@@ -50,7 +52,7 @@ function App() {
         <IntroSection />
         <HeroSection />
         <StatsSection />
-        <GallerySection onSecret={revealSecret} />
+        <GallerySection photos={galleryPhotos} onSecret={revealSecret} />
         <SpecificationsSection />
         <AudiSection onSecret={revealSecret} />
         <LandscapingSection />
