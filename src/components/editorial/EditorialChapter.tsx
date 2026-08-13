@@ -40,6 +40,7 @@ export interface SpecificationsSectionProps {
 type AudiConfig = SimaConfig['audi'] & {
   image?: string
   alt?: string
+  objectPosition?: string
 }
 
 export interface AudiSectionProps extends SecretProps {
@@ -204,6 +205,9 @@ function GalleryCard({ photo, index, onOpen, onSecret }: GalleryCardProps) {
             src={photo.image}
             alt={photo.alt}
             loading={isFeatured ? 'eager' : 'lazy'}
+            fetchPriority={isFeatured ? 'high' : 'auto'}
+            decoding="async"
+            style={{ objectPosition: photo.objectPosition }}
             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
           />
         ) : (
@@ -363,6 +367,7 @@ function GalleryViewer({
                   <img
                     src={selectedPhoto.image}
                     alt={selectedPhoto.alt}
+                    decoding="async"
                     className="h-full w-full object-contain"
                   />
                 ) : (
@@ -576,6 +581,8 @@ export function AudiSection({ audi = sima.audi, onSecret }: AudiSectionProps) {
               src={audi.image}
               alt={audi.alt || 'Audi A3 Сіми'}
               loading="lazy"
+              decoding="async"
+              style={{ objectPosition: audi.objectPosition }}
               className="h-full w-full object-cover"
             />
           ) : (
@@ -587,11 +594,6 @@ export function AudiSection({ audi = sima.audi, onSecret }: AudiSectionProps) {
             aria-hidden="true"
           />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" aria-hidden="true" />
-          {audi.image && (
-            <span className="absolute bottom-5 left-5 font-mono text-[10px] tracking-[0.16em] text-white/55 sm:bottom-7 sm:left-7">
-              {audi.placeholder}
-            </span>
-          )}
         </motion.div>
 
         <Reveal className="mt-20 sm:mt-28" delay={0.08}>

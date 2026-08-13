@@ -155,7 +155,7 @@ export function IntroSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const [ctaAvailable, setCtaAvailable] = useState(false)
   const birthday = sima.birthday.trim() || sima.birthdayFallback
-  const heroImage = sima.photos.find((photo) => photo.featured)?.image
+  const heroPhoto = sima.photos.find((photo) => photo.featured)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
@@ -244,9 +244,12 @@ export function IntroSection() {
         >
           <PhotoPlaceholder
             label={sima.hero.placeholder}
-            image={heroImage}
+            image={heroPhoto?.image}
             alt=""
             dark
+            objectPosition={heroPhoto?.objectPosition}
+            loading="eager"
+            fetchPriority="high"
             className="h-full min-h-0 w-full rounded-[1.75rem]"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" />
@@ -284,7 +287,7 @@ export function IntroSection() {
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
-  const heroImage = sima.photos.find((photo) => photo.featured)?.image
+  const heroPhoto = sima.photos.find((photo) => photo.featured)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
@@ -341,8 +344,11 @@ export function HeroSection() {
           <motion.div style={shouldReduceMotion ? undefined : { y: photoY }}>
             <PhotoPlaceholder
               label={sima.hero.placeholder}
-              image={heroImage}
+              image={heroPhoto?.image}
               alt="Портрет Сіми"
+              objectPosition={heroPhoto?.objectPosition}
+              loading="eager"
+              fetchPriority="high"
               className="h-[68svh] min-h-[32rem] max-h-[54rem] w-full rounded-[2rem] sm:min-h-[40rem] sm:rounded-[2.75rem]"
             />
           </motion.div>

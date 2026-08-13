@@ -37,6 +37,7 @@ export function LeadershipSection() {
               label={leadershipPhoto?.placeholder ?? 'SIMA_CHURCH'}
               image={leadershipPhoto?.image}
               alt={leadershipPhoto?.alt ?? 'Сіма з групою під час служіння'}
+              objectPosition={leadershipPhoto?.objectPosition}
               className="h-[62svh] min-h-[30rem] w-full sm:min-h-[38rem] lg:h-[76svh] lg:max-h-[56rem]"
             />
           </Reveal>

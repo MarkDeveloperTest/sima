@@ -8,6 +8,9 @@ interface PhotoPlaceholderProps {
   dark?: boolean
   onClick?: () => void
   actionLabel?: string
+  objectPosition?: string
+  loading?: 'eager' | 'lazy'
+  fetchPriority?: 'high' | 'low' | 'auto'
 }
 
 export function PhotoPlaceholder({
@@ -18,6 +21,9 @@ export function PhotoPlaceholder({
   dark = false,
   onClick,
   actionLabel = 'Відкрити',
+  objectPosition,
+  loading = 'lazy',
+  fetchPriority = 'auto',
 }: PhotoPlaceholderProps) {
   const Component = onClick ? 'button' : 'div'
 
@@ -29,7 +35,15 @@ export function PhotoPlaceholder({
       aria-label={onClick ? `${actionLabel}: ${alt || label}` : undefined}
     >
       {image ? (
-        <img src={image} alt={alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+        <img
+          src={image}
+          alt={alt}
+          loading={loading}
+          fetchPriority={fetchPriority}
+          decoding="async"
+          style={{ objectPosition }}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       ) : (
         <>
           <div className="absolute inset-0 placeholder-light" aria-hidden="true" />
@@ -41,10 +55,12 @@ export function PhotoPlaceholder({
         </>
       )}
 
-      <span className="relative z-10 flex h-full min-h-[inherit] flex-col items-center justify-center gap-3 p-6 text-center">
-        {!image && <ImageIcon aria-hidden="true" className="h-5 w-5 opacity-35" strokeWidth={1.25} />}
-        <span className="font-mono text-[10px] font-medium tracking-[0.16em] opacity-65 sm:text-xs">{label}</span>
-      </span>
+      {!image && (
+        <span className="relative z-10 flex h-full min-h-[inherit] flex-col items-center justify-center gap-3 p-6 text-center">
+          <ImageIcon aria-hidden="true" className="h-5 w-5 opacity-35" strokeWidth={1.25} />
+          <span className="font-mono text-[10px] font-medium tracking-[0.16em] opacity-65 sm:text-xs">{label}</span>
+        </span>
+      )}
 
       {onClick && (
         <span className="absolute bottom-4 right-4 z-20 flex items-center gap-2 text-[11px] font-medium opacity-60 transition-opacity group-hover:opacity-100">

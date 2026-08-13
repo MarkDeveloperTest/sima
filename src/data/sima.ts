@@ -17,6 +17,7 @@ export interface SimaPhoto {
   category: PhotoCategory
   featured: boolean
   alt: string
+  objectPosition?: string
 }
 
 export interface InsideJoke {
@@ -69,12 +70,25 @@ export const sima = {
   ],
 
   photos: [
-    { id: 'featured', image: '', placeholder: 'SIMA_FEATURED', caption: 'Головний герой.', date: 'РІК', category: 'Звичайне', featured: true, alt: 'Головне фото Сіми' },
-    { id: 'funny-01', image: '', placeholder: 'SIMA_FUNNY_01', caption: 'Контексту не буде.', date: 'РІК', funnyCaption: 'Рішення було прийнято.', category: 'Сумнівне', featured: false, alt: 'Веселе фото Сіми' },
-    { id: 'church', image: '', placeholder: 'SIMA_CHURCH', caption: 'Режим лідера.', date: 'РІК', category: 'Церква', featured: false, alt: 'Фото Сіми в церкві або з групою' },
-    { id: 'memory-01', image: '', placeholder: 'SIMA_MEMORY_01', caption: 'Один із тих моментів.', date: 'РІК', category: 'Спогади', featured: false, alt: 'Спільний спогад із Сімою' },
-    { id: 'audi', image: '', placeholder: 'SIMA_AUDI', caption: 'Інша частина особистості.', date: 'РІК', category: 'Audi', featured: false, alt: 'Audi A3 Сіми' },
-    { id: 'landscape', image: '', placeholder: 'SIMA_LANDSCAPING', caption: 'Трава, але професійно.', date: 'РІК', category: 'Ландшафт', featured: false, alt: 'Ландшафтна робота Сіми' },
+    { id: 'featured', image: '/photos/sima-hero.webp', placeholder: 'SIMA_FEATURED', caption: 'Головний герой.', date: '2026', category: 'Звичайне', featured: true, alt: 'Портрет Сіми серед дерев', objectPosition: '50% 43%' },
+    { id: 'terrace-portrait', image: '/photos/sima-terrace-portrait.webp', placeholder: 'SIMA_PORTRAIT', caption: 'Режим: спокій.', date: 'СПОГАД', funnyCaption: 'Статус: усе під контролем.', category: 'Звичайне', featured: false, alt: 'Портрет Сіми на терасі', objectPosition: '67% 43%' },
+    { id: 'funny-ground', image: '/photos/sima-ground-portrait.webp', placeholder: 'SIMA_FUNNY_01', caption: 'Контексту не буде.', date: '2026', funnyCaption: 'Рішення було прийнято.', category: 'Сумнівне', featured: false, alt: 'Кумедний портрет Сіми з ракурсу згори', objectPosition: '50% 54%' },
+    { id: 'group-evening', image: '/photos/sima-group-evening.webp', placeholder: 'SIMA_MEMORY_01', caption: 'Невелика компанія.', date: 'СПОГАД', funnyCaption: 'Принаймні так було сказано.', category: 'Спогади', featured: false, alt: 'Сіма робить вечірнє групове селфі', objectPosition: '50% 50%' },
+    { id: 'cat', image: '/photos/sima-with-cat.webp', placeholder: 'SIMA_LEGENDARY_CAT', caption: 'Два абсолютні авторитети.', date: '2026', funnyCaption: 'Один із них явно не в захваті.', category: 'Легендарне', featured: false, alt: 'Сіма тримає великого сірого кота', objectPosition: '53% 47%' },
+    { id: 'dinner-group', image: '/photos/sima-dinner-group.webp', placeholder: 'SIMA_MEMORY_02', caption: 'Командний брейншторм.', date: 'СПОГАД', funnyCaption: 'Починався як звичайна вечеря.', category: 'Спогади', featured: false, alt: 'Сіма з компанією друзів за столом', objectPosition: '50% 63%' },
+    { id: 'church', image: '/photos/sima-leadership-stage.webp', placeholder: 'SIMA_CHURCH', caption: 'Режим лідера.', date: 'СПОГАД', funnyCaption: 'Коли ведеш — люди відповідають.', category: 'Церква', featured: false, alt: 'Сіма веде молодіжну зустріч зі сцени', objectPosition: '51% 45%' },
+    { id: 'restaurant', image: '/photos/sima-restaurant.webp', placeholder: 'SIMA_RESTAURANT', caption: 'Важливі рішення приймаються за столом.', date: '2026', funnyCaption: 'Навіть якщо це просто замовлення.', category: 'Спогади', featured: false, alt: 'Сіма за столом у ресторані', objectPosition: '32% 48%' },
+    { id: 'golden-age', image: '/photos/sima-golden-age.webp', placeholder: 'SIMA_CAMPAIGN', caption: 'Sima × Золотий Вік.', date: 'СПОГАД', funnyCaption: 'Колаборація року.', category: 'Легендарне', featured: false, alt: 'Жартівливий рекламний портрет Сіми з коробкою прикрас', objectPosition: '45% 40%' },
+    { id: 'group-night', image: '/photos/sima-group-night.webp', placeholder: 'SIMA_MEMORY_03', caption: 'Він якось знову зібрав усіх.', date: '2024', funnyCaption: 'Режим наставника: завжди ввімкнено.', category: 'Спогади', featured: false, alt: 'Сіма з великою групою ввечері', objectPosition: '50% 50%' },
+    { id: 'audi', image: '/photos/sima-audi-memory.webp', placeholder: 'SIMA_AUDI', caption: 'Технічна нарада.', date: 'СПОГАД', funnyCaption: 'Пройшла просто на місці.', category: 'Audi', featured: false, alt: 'Сіма з другом біля автомобіля серед дерев', objectPosition: '58% 45%' },
+    { id: 'chips', image: '/photos/sima-chips.webp', placeholder: 'SIMA_FUNNY_02', caption: 'Вибір, від якого залежить майбутнє.', date: '2026', funnyCaption: 'Обидва варіанти пройшли перевірку Сімою.', category: 'Сумнівне', featured: false, alt: 'Сіма з другом обирають чипси', objectPosition: '52% 45%' },
+    { id: 'simaos-loading', image: '/photos/sima-loading.webp', placeholder: 'SIMA_LOADING', caption: 'SimaOS ще завантажується.', date: '2024', funnyCaption: 'Фото зроблено на 73%.', category: 'Сумнівне', featured: false, alt: 'Кумедний кадр Сіми з компанією в кімнаті', objectPosition: '52% 46%' },
+    { id: 'mirror', image: '/photos/sima-mirror.webp', placeholder: 'SIMA_MIRROR', caption: 'Перевірка образу.', date: 'СПОГАД', funnyCaption: 'Дзеркало схвалило.', category: 'Звичайне', featured: false, alt: 'Сіма з другом фотографуються у дзеркалі', objectPosition: '50% 46%' },
+    { id: 'playground', image: '/photos/sima-playground.webp', placeholder: 'SIMA_LEGENDARY_01', caption: 'Впевненість — MAX.', date: '2026', funnyCaption: 'Техніка безпеки вийшла з чату.', category: 'Легендарне', featured: false, alt: 'Сіма стоїть на конструкції спортивного майданчика', objectPosition: '62% 39%' },
+    { id: 'gold-outfit', image: '/photos/sima-gold-outfit.webp', placeholder: 'SIMA_GOLD_MODE', caption: 'Дрескод: із характером.', date: 'СПОГАД', funnyCaption: 'Скромність була в іншому образі.', category: 'Легендарне', featured: false, alt: 'Сіма з другом у чорно-золотих сценічних образах', objectPosition: '50% 47%' },
+    { id: 'trio', image: '/photos/sima-trio.webp', placeholder: 'SIMA_MEMORY_04', caption: 'Команда зібрана.', date: '2026', funnyCaption: 'План з’явиться дорогою.', category: 'Спогади', featured: false, alt: 'Сіма з двома друзями після спільного вечора', objectPosition: '45% 50%' },
+    { id: 'closeup', image: '/photos/sima-closeup.webp', placeholder: 'SIMA_FUNNY_03', caption: 'Фронталка без попередження.', date: 'СПОГАД', funnyCaption: 'Mentor Mode бачить усе.', category: 'Сумнівне', featured: false, alt: 'Дуже крупний кумедний портрет Сіми в автомобілі', objectPosition: '50% 50%' },
+    { id: 'church-costume', image: '/photos/sima-church-costume.webp', placeholder: 'SIMA_CHURCH_MODE', caption: 'Церковний режим: активний.', date: '2024', funnyCaption: 'Костюмний пакет встановлено.', category: 'Церква', featured: false, alt: 'Сіма у біблійному сценічному костюмі', objectPosition: '50% 43%' },
   ] satisfies SimaPhoto[],
 
   specifications: [
@@ -96,6 +110,9 @@ export const sima = {
     designed: 'Створено Audi.',
     operated: 'Керує Сіма.',
     placeholder: 'SIMA_AUDI',
+    image: '/photos/sima-audi-memory.webp',
+    alt: 'Сіма з другом біля автомобіля серед дерев',
+    objectPosition: '58% 45%',
     facts: [
       ['Водій', 'Сіма'],
       ['Пасажири', 'Зазвичай хтось, кого він кудись запросив.'],
@@ -175,7 +192,7 @@ export const sima = {
   ] satisfies InsideJoke[],
 
   songs: [
-    { title: 'Dai Dai', artist: 'Додайте виконавця', src: '' },
+    { title: 'Dai Dai', artist: 'Shakira & Burna Boy', src: '/audio/dai-dai-shakira-burna-boy.mp3' },
     { title: 'Shakira & Burna Boy', artist: 'Додайте точну назву', src: '' },
     { title: 'GIRL LIKE ME', artist: 'Black Eyed Peas & Shakira', src: '' },
   ] satisfies Song[],
