@@ -21,8 +21,14 @@ npm run dev
 - `songs` — локальні аудіофайли.
 - `leadership`, `mentor`, `impact`, `faith`, `finale` — особисті повідомлення.
 
-Фото зручно покласти в `public/photos`, музику — у `public/audio`, а в конфігурації вказувати шляхи на кшталт `/photos/sima-hero.webp` або `/audio/track.mp3`.
+Фото зручно покласти в `public/photos`, музику — у `public/audio`, а в конфігурації пропускати відносні шляхи на кшталт `photos/sima-hero.webp` або `audio/track.mp3` через helper `assetUrl`. Так медіа працюють і локально, і на GitHub Pages у підшляху `/sima/`.
 
 Музика не запускається автоматично. Плеєр відтворює лише локальні файли, додані власником сайту.
 
 Поточна збірка вже містить 19 оптимізованих WebP-фото Сіми та локальний трек `Dai Dai`. Оригінальні HEIC/JPG/PNG-файли не змінювалися.
+
+## GitHub Pages
+
+Push у `main` автоматично збирає Vite-проєкт і публікує папку `dist` через workflow `.github/workflows/deploy-pages.yml`.
+
+Адреса сайту: `https://markdevelopertest.github.io/sima/`.
