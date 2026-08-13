@@ -367,13 +367,24 @@ export function HeroSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.65 }}
               transition={{ ...revealTransition, delay: 0.15 + index * 0.09 }}
-              className={`absolute z-20 flex items-center gap-2 whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.17em] text-ink/75 drop-shadow-[0_1px_8px_rgba(247,246,241,1)] sm:text-xs ${traitPositions[index]}`}
+              className={`absolute z-20 hidden items-center gap-2 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.17em] text-ink/75 drop-shadow-[0_1px_8px_rgba(247,246,241,1)] sm:flex ${traitPositions[index]}`}
             >
               <span className="h-px w-5 bg-current opacity-35 sm:w-8" />
               {trait}
             </motion.div>
           ))}
         </motion.div>
+
+        <ul className="mt-8 grid grid-cols-2 border-y border-black/10 sm:hidden" aria-label="Риси Сіми">
+          {sima.traits.map((trait, index) => (
+            <li
+              key={`mobile-${trait}`}
+              className={`py-3 text-[9px] font-semibold uppercase tracking-[0.14em] text-ink/60 ${index % 2 === 0 ? 'border-r border-black/10 pr-3' : 'pl-3 text-right'} ${index >= 2 ? 'border-t border-black/10' : ''} ${index === sima.traits.length - 1 ? 'col-span-2 border-r-0 text-center' : ''}`}
+            >
+              {trait}
+            </li>
+          ))}
+        </ul>
 
         <p className="mx-auto mt-14 max-w-xl text-center text-sm leading-relaxed text-black/[0.45] sm:mt-20 sm:text-base">
           {sima.intro.generation} · {sima.intro.tagline}
