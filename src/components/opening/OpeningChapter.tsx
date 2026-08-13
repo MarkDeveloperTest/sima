@@ -20,7 +20,7 @@ const revealTransition = {
 const traitMoments = [
   { range: [0.32, 0.42] as const, text: sima.intro.traitSequence[0] },
   { range: [0.42, 0.52] as const, text: sima.intro.traitSequence[1] },
-  { range: [0.52, 0.62] as const, text: sima.intro.traitSequence[2] },
+  { range: [0.52, 0.62] as const, text: sima.intro.traitSequence[2], compact: true },
   { range: [0.62, 0.77] as const, text: sima.intro.traitSequence[3], wide: true },
 ]
 
@@ -81,11 +81,13 @@ function IntroTrait({
   range,
   text,
   wide = false,
+  compact = false,
 }: {
   progress: MotionValue<number>
   range: readonly [number, number]
   text: string
   wide?: boolean
+  compact?: boolean
 }) {
   const duration = range[1] - range[0]
   const opacity = useTransform(
@@ -101,7 +103,11 @@ function IntroTrait({
       aria-hidden="true"
       style={{ opacity, y, scale }}
       className={`absolute inset-x-5 z-20 m-0 text-center font-semibold leading-[0.94] tracking-[-0.055em] text-white drop-shadow-[0_3px_24px_rgba(0,0,0,0.55)] sm:inset-x-10 ${
-        wide ? 'text-[clamp(2.8rem,8vw,7.5rem)]' : 'text-[clamp(4rem,12vw,11rem)]'
+        wide
+          ? 'text-[clamp(2.8rem,8vw,7.5rem)]'
+          : compact
+            ? 'text-[clamp(2.2rem,9.5vw,3.25rem)] sm:text-[clamp(4rem,12vw,11rem)]'
+            : 'text-[clamp(4rem,12vw,11rem)]'
       }`}
     >
       {text}
@@ -145,6 +151,10 @@ function ReducedIntro() {
         <div className="mt-6">
           <MeetSimaButton reducedMotion />
         </div>
+        <p className="mt-10 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
+          Гортай вниз, щоб почати
+          <ArrowDown aria-hidden="true" className="h-4 w-4" strokeWidth={1.7} />
+        </p>
       </div>
     </section>
   )
@@ -168,6 +178,8 @@ export function IntroSection() {
 
   const introducingOpacity = useTransform(progress, [0, 0.09, 0.13], [1, 1, 0])
   const introducingY = useTransform(progress, [0, 0.09, 0.13], [0, 0, -18])
+  const scrollPromptOpacity = useTransform(progress, [0, 0.025, 0.065], [1, 1, 0])
+  const scrollPromptY = useTransform(progress, [0, 0.065], [0, 14])
   const nameOpacity = useTransform(progress, [0.065, 0.12, 0.25, 0.3], [0, 1, 1, 0])
   const nameScale = useTransform(progress, [0.065, 0.14, 0.3], [0.88, 1, 1.04])
   const generationOpacity = useTransform(progress, [0.13, 0.18, 0.27, 0.31], [0, 1, 1, 0])
@@ -215,6 +227,20 @@ export function IntroSection() {
           className="absolute inset-x-5 m-0 text-center text-xs font-semibold uppercase tracking-[0.25em] text-matcha-300 sm:text-sm"
         >
           {sima.intro.introducing}
+        </motion.p>
+
+        <motion.p
+          style={{ opacity: scrollPromptOpacity, y: scrollPromptY }}
+          className="absolute inset-x-5 bottom-24 z-30 m-0 flex items-center justify-center gap-2 whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60 sm:inset-x-8 sm:bottom-8 sm:text-xs"
+        >
+          Гортай вниз, щоб почати
+          <motion.span
+            aria-hidden="true"
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 1.6, ease: 'easeInOut', repeat: Number.POSITIVE_INFINITY }}
+          >
+            <ArrowDown className="h-4 w-4" strokeWidth={1.7} />
+          </motion.span>
         </motion.p>
 
         <motion.div

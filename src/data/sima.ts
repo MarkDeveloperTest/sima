@@ -41,7 +41,7 @@ const assetUrl = (path: string) =>
 export const sima = {
   name: 'Сіма',
   age: 24,
-  birthday: '',
+  birthday: '14.08.2002',
   birthdayFallback: '[ДАТА НАРОДЖЕННЯ]',
   theme: { primary: 'matcha' },
 
