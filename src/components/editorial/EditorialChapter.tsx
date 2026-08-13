@@ -626,9 +626,18 @@ interface LandscapeImageProps {
   variant: 'before' | 'after'
 }
 
-function LandscapeImage({ image, placeholder, label, variant }: LandscapeImageProps) {
+function LandscapeImage({ image, placeholder, variant }: LandscapeImageProps) {
   if (image) {
-    return <img src={image} alt={label} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+    return (
+      <img
+        src={image}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        draggable="false"
+        className="absolute inset-0 h-full w-full select-none object-cover"
+      />
+    )
   }
 
   return <PlaceholderArtwork label={placeholder} variant={variant} />
@@ -670,13 +679,12 @@ export function LandscapingSection({ landscaping = sima.landscaping }: Landscapi
             <output
               htmlFor="landscape-comparison"
               className="shrink-0 font-mono text-[9px] uppercase tracking-[0.15em] text-ink/45 sm:text-[10px]"
-              aria-live="polite"
             >
               {position}% / {100 - position}%
             </output>
           </div>
 
-          <figure>
+          <figure aria-label="Ландшафт до і після роботи Сіми">
             <div
               className={`relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-matcha-800 shadow-[0_28px_90px_rgba(47,65,40,.22)] transition-shadow sm:aspect-[16/9] sm:rounded-[1.75rem] ${
                 isFocused ? 'ring-2 ring-matcha-700 ring-offset-4 ring-offset-matcha-100' : ''
@@ -686,13 +694,12 @@ export function LandscapingSection({ landscaping = sima.landscaping }: Landscapi
                 <LandscapeImage {...landscaping.after} variant="after" />
               </div>
 
-              <motion.div
+              <div
                 className="absolute inset-0 overflow-hidden"
-                animate={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
-                transition={{ duration: 0.08, ease: 'linear' }}
+                style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
               >
                 <LandscapeImage {...landscaping.before} variant="before" />
-              </motion.div>
+              </div>
 
               <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-between p-4 sm:p-6">
                 <span className="rounded-full bg-[#101410]/72 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-md sm:text-xs">
@@ -703,16 +710,15 @@ export function LandscapingSection({ landscaping = sima.landscaping }: Landscapi
                 </span>
               </div>
 
-              <motion.div
+              <div
                 className="pointer-events-none absolute inset-y-0 z-20 w-px bg-white shadow-[0_0_16px_rgba(0,0,0,.42)]"
-                animate={{ left: `${position}%` }}
-                transition={{ duration: 0.08, ease: 'linear' }}
+                style={{ left: `${position}%` }}
                 aria-hidden="true"
               >
                 <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/65 bg-[#101410]/76 text-white shadow-lg backdrop-blur-md sm:h-14 sm:w-14">
                   <MoveHorizontal className="h-5 w-5" strokeWidth={1.5} />
                 </span>
-              </motion.div>
+              </div>
 
               <label htmlFor="landscape-comparison" className="sr-only">
                 Порівняйте ландшафт до і після роботи Сіми
@@ -727,8 +733,8 @@ export function LandscapingSection({ landscaping = sima.landscaping }: Landscapi
                 onKeyDown={onRangeKeyDown}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                className="absolute inset-0 z-30 h-full w-full cursor-col-resize opacity-0"
-                aria-valuetext={`${position}% — до Сіми, ${100 - position}% — після Сіми`}
+                className="absolute inset-0 z-30 h-full w-full touch-pan-y cursor-col-resize opacity-0"
+                aria-valuetext={`Видно: до Сіми ${position}%, після Сіми ${100 - position}%`}
               />
             </div>
 

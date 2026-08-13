@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { motion, useScroll } from 'framer-motion'
+import { useLayoutEffect, useState } from 'react'
 import { EasterEggOverlay } from './components/EasterEggOverlay'
 import { GallerySection, SpecificationsSection, AudiSection, LandscapingSection } from './components/editorial/EditorialChapter'
 import { FinaleSection } from './components/finale/FinaleSection'
@@ -8,13 +8,22 @@ import { MusicPlayer } from './components/MusicPlayer'
 import { HeroSection, IntroSection, StatsSection } from './components/opening/OpeningChapter'
 import { FaithSection, ImpactSection, LeadershipSection, MentorSection } from './components/story/StoryChapter'
 import { sima, type InsideJoke } from './data/sima'
-import { useScrollProgress } from './hooks/useScrollProgress'
 
 type SecretTrigger = InsideJoke['trigger']
 
 function App() {
-  const progress = useScrollProgress()
+  const { scrollYProgress: progress } = useScroll()
   const [activeJoke, setActiveJoke] = useState<InsideJoke | null>(null)
+
+  useLayoutEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1))
+    if (!id) return
+
+    const target = document.getElementById(id)
+    if (!target) return
+
+    target.scrollIntoView({ behavior: 'auto', block: 'start' })
+  }, [])
 
   const revealSecret = (trigger: SecretTrigger) => {
     const joke = sima.insideJokes.find((item) => item.trigger === trigger && item.hidden)

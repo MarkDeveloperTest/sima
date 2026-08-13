@@ -3,7 +3,6 @@ import {
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
   type MotionValue,
 } from 'framer-motion'
@@ -106,7 +105,7 @@ function IntroTrait({
         wide
           ? 'text-[clamp(2.8rem,8vw,7.5rem)]'
           : compact
-            ? 'text-[clamp(2.2rem,9.5vw,3.25rem)] sm:text-[clamp(4rem,12vw,11rem)]'
+            ? 'text-[clamp(1.55rem,8.8vw,3.25rem)] sm:text-[clamp(4rem,12vw,11rem)]'
             : 'text-[clamp(4rem,12vw,11rem)]'
       }`}
     >
@@ -130,8 +129,9 @@ function ReducedIntro() {
       />
 
       <div className="mx-auto flex w-full max-w-[1180px] flex-col items-center justify-center text-center">
-        <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-matcha-300 sm:text-sm">
-          {sima.intro.introducing}
+        <p className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_16px_50px_rgba(0,0,0,0.28)] sm:text-sm">
+          {sima.intro.scrollCue}
+          <ArrowDown aria-hidden="true" className="h-4 w-4" strokeWidth={1.8} />
         </p>
         <h1 id="intro-title" className="display-xl text-white">
           {sima.name.toUpperCase()}
@@ -151,10 +151,6 @@ function ReducedIntro() {
         <div className="mt-6">
           <MeetSimaButton reducedMotion />
         </div>
-        <p className="mt-10 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
-          Гортай вниз, щоб почати
-          <ArrowDown aria-hidden="true" className="h-4 w-4" strokeWidth={1.7} />
-        </p>
       </div>
     </section>
   )
@@ -170,16 +166,10 @@ export function IntroSection() {
     target: sectionRef,
     offset: ['start start', 'end end'],
   })
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 84,
-    damping: 27,
-    mass: 0.32,
-  })
+  const progress = scrollYProgress
 
   const introducingOpacity = useTransform(progress, [0, 0.09, 0.13], [1, 1, 0])
   const introducingY = useTransform(progress, [0, 0.09, 0.13], [0, 0, -18])
-  const scrollPromptOpacity = useTransform(progress, [0, 0.025, 0.065], [1, 1, 0])
-  const scrollPromptY = useTransform(progress, [0, 0.065], [0, 14])
   const nameOpacity = useTransform(progress, [0.065, 0.12, 0.25, 0.3], [0, 1, 1, 0])
   const nameScale = useTransform(progress, [0.065, 0.14, 0.3], [0.88, 1, 1.04])
   const generationOpacity = useTransform(progress, [0.13, 0.18, 0.27, 0.31], [0, 1, 1, 0])
@@ -191,7 +181,8 @@ export function IntroSection() {
   const progressScale = useTransform(progress, [0, 1], [0, 1])
 
   useMotionValueEvent(progress, 'change', (latest) => {
-    setCtaAvailable(latest >= 0.78)
+    const available = latest >= 0.78
+    setCtaAvailable((current) => current === available ? current : available)
   })
 
   if (shouldReduceMotion) {
@@ -203,7 +194,7 @@ export function IntroSection() {
       ref={sectionRef}
       id="intro"
       aria-labelledby="intro-title"
-      className="relative h-[650svh] bg-[#090b09] text-white sm:h-[720svh]"
+      className="relative h-[500svh] bg-[#090b09] text-white sm:h-[560svh]"
     >
       <div className="sticky top-0 isolate flex h-[100svh] items-center justify-center overflow-hidden">
         <div
@@ -221,27 +212,22 @@ export function IntroSection() {
           <p>{sima.intro.traitSequence.join(' ')}</p>
         </div>
 
-        <motion.p
-          aria-hidden="true"
+        <motion.div
           style={{ opacity: introducingOpacity, y: introducingY }}
-          className="absolute inset-x-5 m-0 text-center text-xs font-semibold uppercase tracking-[0.25em] text-matcha-300 sm:text-sm"
+          className="absolute inset-x-5 z-30 flex justify-center text-center"
         >
-          {sima.intro.introducing}
-        </motion.p>
-
-        <motion.p
-          style={{ opacity: scrollPromptOpacity, y: scrollPromptY }}
-          className="absolute inset-x-5 bottom-24 z-30 m-0 flex items-center justify-center gap-2 whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60 sm:inset-x-8 sm:bottom-8 sm:text-xs"
-        >
-          Гортай вниз, щоб почати
-          <motion.span
-            aria-hidden="true"
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.6, ease: 'easeInOut', repeat: Number.POSITIVE_INFINITY }}
-          >
-            <ArrowDown className="h-4 w-4" strokeWidth={1.7} />
-          </motion.span>
-        </motion.p>
+          <p className="m-0 flex items-center gap-3 rounded-full border border-white/25 bg-black/35 px-6 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_18px_70px_rgba(0,0,0,0.45)] backdrop-blur-md sm:px-7 sm:text-sm">
+            {sima.intro.scrollCue}
+            <motion.span
+              aria-hidden="true"
+              animate={{ y: [0, 5, 0] }}
+              transition={{ duration: 1.6, ease: 'easeInOut', repeat: Number.POSITIVE_INFINITY }}
+              className="inline-flex"
+            >
+              <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
+            </motion.span>
+          </p>
+        </motion.div>
 
         <motion.div
           aria-hidden="true"

@@ -54,6 +54,7 @@ export const sima = {
     tagline: 'Найдосконаліший Сіма на сьогодні.',
     traitSequence: ['Веселий.', 'Впевнений.', 'Відповідальний.', 'І якимось чином відповідальний за всіх нас.'],
     availabilityLabel: 'Доступний',
+    scrollCue: 'Гортай вниз, щоб почати',
     cta: 'Зустрічайте Сіму',
   },
 
@@ -77,7 +78,7 @@ export const sima = {
     { id: 'terrace-portrait', image: assetUrl('photos/sima-terrace-portrait.webp'), placeholder: 'SIMA_PORTRAIT', caption: 'Режим: спокій.', date: 'СПОГАД', funnyCaption: 'Статус: усе під контролем.', category: 'Звичайне', featured: false, alt: 'Портрет Сіми на терасі', objectPosition: '67% 43%' },
     { id: 'funny-ground', image: assetUrl('photos/sima-ground-portrait.webp'), placeholder: 'SIMA_FUNNY_01', caption: 'Контексту не буде.', date: '2026', funnyCaption: 'Рішення було прийнято.', category: 'Сумнівне', featured: false, alt: 'Кумедний портрет Сіми з ракурсу згори', objectPosition: '50% 54%' },
     { id: 'group-evening', image: assetUrl('photos/sima-group-evening.webp'), placeholder: 'SIMA_MEMORY_01', caption: 'Невелика компанія.', date: 'СПОГАД', funnyCaption: 'Принаймні так було сказано.', category: 'Спогади', featured: false, alt: 'Сіма робить вечірнє групове селфі', objectPosition: '50% 50%' },
-    { id: 'cat', image: assetUrl('photos/sima-with-cat.webp'), placeholder: 'SIMA_LEGENDARY_CAT', caption: 'Два абсолютні авторитети.', date: '2026', funnyCaption: 'Один із них явно не в захваті.', category: 'Легендарне', featured: false, alt: 'Сіма тримає великого сірого кота', objectPosition: '53% 47%' },
+    { id: 'cat', image: assetUrl('photos/sima-with-cat.webp'), placeholder: 'SIMA_LEGENDARY_CAT', caption: 'Два абсолютні авторитети.', date: '2026', funnyCaption: 'Один із них явно не в захваті.', category: 'Легендарне', featured: false, alt: 'Сіма тримає великого сірого кота', objectPosition: '53% 53%' },
     { id: 'dinner-group', image: assetUrl('photos/sima-dinner-group.webp'), placeholder: 'SIMA_MEMORY_02', caption: 'Командний брейншторм.', date: 'СПОГАД', funnyCaption: 'Починався як звичайна вечеря.', category: 'Спогади', featured: false, alt: 'Сіма з компанією друзів за столом', objectPosition: '50% 63%' },
     { id: 'church', image: assetUrl('photos/sima-leadership-stage.webp'), placeholder: 'SIMA_CHURCH', caption: 'Режим лідера.', date: 'СПОГАД', funnyCaption: 'Коли ведеш — люди відповідають.', category: 'Церква', featured: false, alt: 'Сіма веде молодіжну зустріч зі сцени', objectPosition: '51% 45%' },
     { id: 'restaurant', image: assetUrl('photos/sima-restaurant.webp'), placeholder: 'SIMA_RESTAURANT', caption: 'Важливі рішення приймаються за столом.', date: '2026', funnyCaption: 'Навіть якщо це просто замовлення.', category: 'Спогади', featured: false, alt: 'Сіма за столом у ресторані', objectPosition: '32% 48%' },
@@ -89,7 +90,7 @@ export const sima = {
     { id: 'mirror', image: assetUrl('photos/sima-mirror.webp'), placeholder: 'SIMA_MIRROR', caption: 'Перевірка образу.', date: 'СПОГАД', funnyCaption: 'Дзеркало схвалило.', category: 'Звичайне', featured: false, alt: 'Сіма з другом фотографуються у дзеркалі', objectPosition: '50% 46%' },
     { id: 'playground', image: assetUrl('photos/sima-playground.webp'), placeholder: 'SIMA_LEGENDARY_01', caption: 'Впевненість — MAX.', date: '2026', funnyCaption: 'Техніка безпеки вийшла з чату.', category: 'Легендарне', featured: false, alt: 'Сіма стоїть на конструкції спортивного майданчика', objectPosition: '62% 39%' },
     { id: 'gold-outfit', image: assetUrl('photos/sima-gold-outfit.webp'), placeholder: 'SIMA_GOLD_MODE', caption: 'Дрескод: із характером.', date: 'СПОГАД', funnyCaption: 'Скромність була в іншому образі.', category: 'Легендарне', featured: false, alt: 'Сіма з другом у чорно-золотих сценічних образах', objectPosition: '50% 47%' },
-    { id: 'trio', image: assetUrl('photos/sima-trio.webp'), placeholder: 'SIMA_MEMORY_04', caption: 'Команда зібрана.', date: '2026', funnyCaption: 'План з’явиться дорогою.', category: 'Спогади', featured: false, alt: 'Сіма з двома друзями після спільного вечора', objectPosition: '45% 50%' },
+    { id: 'trio', image: assetUrl('photos/sima-trio.webp'), placeholder: 'SIMA_MEMORY_04', caption: 'Команда зібрана.', date: '2026', funnyCaption: 'План з’явиться дорогою.', category: 'Спогади', featured: false, alt: 'Сіма з двома друзями після спільного вечора', objectPosition: '50% 45%' },
     { id: 'closeup', image: assetUrl('photos/sima-closeup.webp'), placeholder: 'SIMA_FUNNY_03', caption: 'Фронталка без попередження.', date: 'СПОГАД', funnyCaption: 'Mentor Mode бачить усе.', category: 'Сумнівне', featured: false, alt: 'Дуже крупний кумедний портрет Сіми в автомобілі', objectPosition: '50% 50%' },
     { id: 'church-costume', image: assetUrl('photos/sima-church-costume.webp'), placeholder: 'SIMA_CHURCH_MODE', caption: 'Церковний режим: активний.', date: '2024', funnyCaption: 'Костюмний пакет встановлено.', category: 'Церква', featured: false, alt: 'Сіма у біблійному сценічному костюмі', objectPosition: '50% 43%' },
   ] satisfies SimaPhoto[],
@@ -128,8 +129,8 @@ export const sima = {
     title: 'Він торкається трави професійно.',
     punchline: 'Буквально.',
     brand: 'Ландшафти від Сіми™',
-    before: { image: '', placeholder: 'SIMA_LANDSCAPING_BEFORE', label: 'До Сіми' },
-    after: { image: '', placeholder: 'SIMA_LANDSCAPING_AFTER', label: 'Після Сіми' },
+    before: { image: assetUrl('photos/sima-landscape-before.webp'), placeholder: 'SIMA_LANDSCAPING_BEFORE', label: 'До Сіми' },
+    after: { image: assetUrl('photos/sima-landscape-after.webp'), placeholder: 'SIMA_LANDSCAPING_AFTER', label: 'Після Сіми' },
   },
 
   leadership: {
