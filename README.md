@@ -1,6 +1,6 @@
 # 24 роки Сіми
 
-Преміальний інтерактивний birthday experience українською мовою. Побудовано на React, Vite, TypeScript, Tailwind CSS і Framer Motion.
+Преміальна інтерактивна історія до 24-річчя Сіми українською мовою. Побудовано на React, Vite, TypeScript, Tailwind CSS і Framer Motion.
 
 ## Запуск
 

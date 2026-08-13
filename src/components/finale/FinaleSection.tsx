@@ -119,7 +119,7 @@ export function FinaleSection() {
           </AnimatePresence>
         </div>
 
-        <footer className="section-pad content-shell flex flex-col gap-1 border-t border-black/15 py-12 text-xs text-black/60 sm:flex-row sm:items-center sm:justify-between">
+        <footer className="section-pad content-shell flex flex-col gap-1 border-t border-black/15 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-12 text-xs text-black/60 sm:flex-row sm:items-center sm:justify-between sm:pb-28 sm:pr-72">
           <p>{sima.finale.madeFor}</p>
           <p>{sima.finale.madeBecause}</p>
         </footer>

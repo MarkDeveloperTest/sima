@@ -21,6 +21,7 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(0.7)
+  const shortViewport = typeof window !== 'undefined' && window.innerHeight <= 450
 
   const playableSongs = useMemo(() => songs.filter((song) => song.src.trim()), [songs])
   const displayTrack = playableSongs[trackIndex] ?? songs[0]
@@ -31,6 +32,13 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
     if (!audio) return
     audio.volume = volume
   }, [volume])
+
+  useEffect(() => {
+    if (!expanded) return
+    const collapseOnScroll = () => setExpanded(false)
+    window.addEventListener('scroll', collapseOnScroll, { passive: true, once: true })
+    return () => window.removeEventListener('scroll', collapseOnScroll)
+  }, [expanded])
 
   const togglePlayback = async () => {
     const audio = audioRef.current
@@ -66,19 +74,19 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
       )}
 
       <AnimatePresence mode="wait">
-        {expanded ? (
+        {expanded && !shortViewport ? (
           <motion.div
             key="expanded"
             initial={{ opacity: 0, y: 14, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.96 }}
-            className="w-[min(22rem,calc(100vw-2rem))] rounded-[1.5rem] border border-white/30 bg-[#171918]/95 p-4 text-white shadow-2xl backdrop-blur-xl"
+            className="max-h-[calc(100svh-2rem)] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto rounded-[1.5rem] border border-white/30 bg-[#171918]/95 p-4 text-white shadow-2xl backdrop-blur-xl"
           >
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-matcha-300">Фоновий трек</p>
                 <p className="mt-1 truncate text-sm font-semibold">{displayTrack?.title ?? 'Локальна музика'}</p>
-                <p className="truncate text-xs text-white/50">{hasAudio ? displayTrack.artist : 'Додайте локальний аудіофайл у sima.ts'}</p>
+                <p className="truncate text-xs text-white/50">{hasAudio ? displayTrack.artist : 'Трек недоступний'}</p>
               </div>
               <button type="button" onClick={() => setExpanded(false)} aria-label="Згорнути плеєр" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full hover:bg-white/10">
                 <ChevronDown className="h-5 w-5" aria-hidden="true" />
@@ -89,7 +97,7 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
               <button type="button" onClick={togglePlayback} disabled={!hasAudio} aria-label={playing ? 'Пауза' : 'Відтворити'} className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-black disabled:cursor-not-allowed disabled:opacity-45">
                 {playing ? <Pause className="h-5 w-5 fill-current" aria-hidden="true" /> : <Play className="ml-0.5 h-5 w-5 fill-current" aria-hidden="true" />}
               </button>
-              <button type="button" onClick={nextTrack} disabled={!hasAudio} aria-label="Наступний трек" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full hover:bg-white/10 disabled:opacity-35">
+              <button type="button" onClick={nextTrack} disabled={playableSongs.length < 2} aria-label="Наступний трек" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full hover:bg-white/10 disabled:opacity-35">
                 <SkipForward className="h-5 w-5 fill-current" aria-hidden="true" />
               </button>
               <div className="ml-auto flex items-center gap-2">
@@ -135,7 +143,7 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
             </span>
             <span>
               <span className="block max-w-36 truncate text-xs font-semibold">{displayTrack?.title ?? 'Музика'}</span>
-              <span className="block text-[10px] text-white/50">{playing ? 'Відтворюється' : 'Не відтворюється'}</span>
+              <span className="block text-[10px] text-white/50">{playing ? 'Відтворюється' : 'Готово до відтворення'}</span>
             </span>
           </motion.button>
         )}

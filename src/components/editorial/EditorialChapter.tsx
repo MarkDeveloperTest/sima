@@ -466,7 +466,10 @@ export function GallerySection({ photos = sima.photos, onSecret }: GallerySectio
         onIndexChange={setSelectedIndex}
         onClose={closeViewer}
         returnFocusRef={returnFocusRef}
-        onSecret={onSecret ? () => onSecret('photo') : undefined}
+        onSecret={onSecret ? () => {
+          closeViewer()
+          window.requestAnimationFrame(() => onSecret('photo'))
+        } : undefined}
       />
     </section>
   )
