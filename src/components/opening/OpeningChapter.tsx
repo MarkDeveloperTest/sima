@@ -160,7 +160,6 @@ export function IntroSection() {
   const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
   const [ctaAvailable, setCtaAvailable] = useState(false)
-  const [showScrollCue, setShowScrollCue] = useState(true)
   const birthday = sima.birthday.trim() || sima.birthdayFallback
   const heroPhoto = sima.photos.find((photo) => photo.featured)
   const { scrollYProgress } = useScroll({
@@ -177,13 +176,13 @@ export function IntroSection() {
   const photoScale = useTransform(progress, [0.265, 0.37, 0.73, 0.79], [1.08, 1, 1.025, 0.97])
   const finalOpacity = useTransform(progress, [0.76, 0.83, 1], [0, 1, 1])
   const finalY = useTransform(progress, [0.76, 0.84, 1], [36, 0, 0])
+  const cueOpacity = useTransform(progress, [0, 0.001, 0.00101], [1, 1, 0])
+  const cueVisibility = useTransform(progress, (latest) => latest > 0.001 ? 'hidden' : 'visible')
   const progressScale = useTransform(progress, [0, 1], [0, 1])
 
   useMotionValueEvent(progress, 'change', (latest) => {
     const available = latest >= 0.78
-    const cueVisible = latest < 0.006
     setCtaAvailable((current) => current === available ? current : available)
-    setShowScrollCue((current) => current === cueVisible ? current : cueVisible)
   })
 
   if (shouldReduceMotion) {
@@ -207,27 +206,18 @@ export function IntroSection() {
           className="absolute inset-0 -z-10 opacity-[0.09] [background-image:linear-gradient(rgba(255,255,255,0.09)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.09)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(circle_at_center,black,transparent_72%)]"
         />
 
-        <div className="sr-only">
-          <h1 id="intro-title">{sima.name}. {sima.intro.generation}.</h1>
-          <p>{sima.intro.tagline}</p>
-          <p>{sima.intro.traitSequence.join(' ')}</p>
-        </div>
+        <h1 id="intro-title" className="sr-only">{sima.name}. {sima.intro.generation}.</h1>
 
-        {showScrollCue && (
-          <div className="absolute inset-x-5 z-30 flex justify-center text-center">
-            <p className="m-0 flex items-center gap-3 rounded-full border border-white/25 bg-black/35 px-6 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_18px_70px_rgba(0,0,0,0.45)] backdrop-blur-md sm:px-7 sm:text-sm">
-              {sima.intro.scrollCue}
-              <motion.span
-                aria-hidden="true"
-                animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 1.6, ease: 'easeInOut', repeat: Number.POSITIVE_INFINITY }}
-                className="inline-flex"
-              >
-                <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
-              </motion.span>
-            </p>
+        <motion.div
+          aria-hidden="true"
+          style={{ opacity: cueOpacity, visibility: cueVisibility }}
+          className="pointer-events-none absolute inset-x-5 z-30 flex justify-center text-center"
+        >
+          <div className="flex items-center gap-3 rounded-full border border-white/25 bg-black/35 px-6 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_18px_70px_rgba(0,0,0,0.45)] backdrop-blur-md sm:px-7 sm:text-sm">
+            {sima.intro.scrollCue}
+            <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
           </div>
-        )}
+        </motion.div>
 
         <motion.div
           aria-hidden="true"
@@ -387,10 +377,11 @@ export function HeroSection() {
           ))}
         </motion.div>
 
-        <ul className="mt-8 grid grid-cols-2 border-y border-black/10 sm:hidden" aria-label="Риси Сіми">
+        <ul className="mt-8 grid grid-cols-2 border-y border-black/10 sm:hidden" role="presentation" inert>
           {sima.traits.map((trait, index) => (
             <li
               key={`mobile-${trait}`}
+              aria-hidden="true"
               className={`py-3 text-[9px] font-semibold uppercase tracking-[0.14em] text-ink/60 ${index % 2 === 0 ? 'border-r border-black/10 pr-3' : 'pl-3 text-right'} ${index >= 2 ? 'border-t border-black/10' : ''} ${index === sima.traits.length - 1 ? 'col-span-2 border-r-0 text-center' : ''}`}
             >
               {trait}
@@ -398,9 +389,6 @@ export function HeroSection() {
           ))}
         </ul>
 
-        <p className="mx-auto mt-14 max-w-xl text-center text-sm leading-relaxed text-black/[0.45] sm:mt-20 sm:text-base">
-          {sima.intro.generation} · {sima.intro.tagline}
-        </p>
       </div>
     </section>
   )

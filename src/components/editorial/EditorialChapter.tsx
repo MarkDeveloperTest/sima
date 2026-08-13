@@ -204,7 +204,7 @@ function GalleryCard({ photo, index, onOpen, onSecret }: GalleryCardProps) {
         {photo.image ? (
           <img
             src={photo.image}
-            alt={photo.alt}
+            alt=""
             loading={isFeatured ? 'eager' : 'lazy'}
             fetchPriority={isFeatured ? 'high' : 'auto'}
             decoding="async"
@@ -737,9 +737,8 @@ export function LandscapingSection({ landscaping = sima.landscaping }: Landscapi
               />
             </div>
 
-            <figcaption className="mt-5 flex items-center justify-between gap-6 text-xs text-ink/50 sm:text-sm">
-              <span>{landscaping.before.label}</span>
-              <span className="text-right">{landscaping.after.label}</span>
+            <figcaption className="mt-5 text-center text-xs text-ink/50 sm:text-sm">
+              Перетягніть межу, щоб порівняти
             </figcaption>
           </figure>
         </Reveal>
