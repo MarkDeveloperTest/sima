@@ -20,6 +20,7 @@ import {
   useState,
 } from 'react'
 import { sima, type SimaConfig, type SimaPhoto } from '../../data/sima'
+import { useScrollLock } from '../../hooks/useScrollLock'
 import { Reveal } from '../shared/Reveal'
 
 type SecretTrigger = 'photo' | 'audi'
@@ -259,17 +260,15 @@ function GalleryViewer({
   const secret = useSecretActivation(onSecret, 850, 5)
   const isOpen = selectedIndex !== null && photos[selectedIndex] !== undefined
   const selectedPhoto = isOpen ? photos[selectedIndex] : null
+  useScrollLock(isOpen)
 
   useEffect(() => {
     if (!isOpen) return
 
-    const previousOverflow = document.body.style.overflow
     const returnFocus = returnFocusRef.current
-    document.body.style.overflow = 'hidden'
     window.requestAnimationFrame(() => closeRef.current?.focus())
 
     return () => {
-      document.body.style.overflow = previousOverflow
       returnFocus?.focus()
     }
   }, [isOpen, returnFocusRef])

@@ -16,13 +16,16 @@ function App() {
   const [activeJoke, setActiveJoke] = useState<InsideJoke | null>(null)
 
   useLayoutEffect(() => {
-    const id = decodeURIComponent(window.location.hash.slice(1))
-    if (!id) return
+    const scrollToHash = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1))
+      if (!id) return
 
-    const target = document.getElementById(id)
-    if (!target) return
+      document.getElementById(id)?.scrollIntoView({ behavior: 'auto', block: 'start' })
+    }
 
-    target.scrollIntoView({ behavior: 'auto', block: 'start' })
+    scrollToHash()
+    window.addEventListener('hashchange', scrollToHash)
+    return () => window.removeEventListener('hashchange', scrollToHash)
   }, [])
 
   const revealSecret = (trigger: SecretTrigger) => {

@@ -1,6 +1,7 @@
 import { X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { InsideJoke } from '../data/sima'
+import { useScrollLock } from '../hooks/useScrollLock'
 
 interface EasterEggOverlayProps {
   joke: InsideJoke | null
@@ -8,6 +9,8 @@ interface EasterEggOverlayProps {
 }
 
 export function EasterEggOverlay({ joke, onClose }: EasterEggOverlayProps) {
+  useScrollLock(Boolean(joke))
+
   return (
     <AnimatePresence>
       {joke && (

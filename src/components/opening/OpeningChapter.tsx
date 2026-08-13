@@ -160,6 +160,7 @@ export function IntroSection() {
   const shouldReduceMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
   const [ctaAvailable, setCtaAvailable] = useState(false)
+  const [showScrollCue, setShowScrollCue] = useState(true)
   const birthday = sima.birthday.trim() || sima.birthdayFallback
   const heroPhoto = sima.photos.find((photo) => photo.featured)
   const { scrollYProgress } = useScroll({
@@ -168,8 +169,6 @@ export function IntroSection() {
   })
   const progress = scrollYProgress
 
-  const introducingOpacity = useTransform(progress, [0, 0.09, 0.13], [1, 1, 0])
-  const introducingY = useTransform(progress, [0, 0.09, 0.13], [0, 0, -18])
   const nameOpacity = useTransform(progress, [0.065, 0.12, 0.25, 0.3], [0, 1, 1, 0])
   const nameScale = useTransform(progress, [0.065, 0.14, 0.3], [0.88, 1, 1.04])
   const generationOpacity = useTransform(progress, [0.13, 0.18, 0.27, 0.31], [0, 1, 1, 0])
@@ -182,7 +181,9 @@ export function IntroSection() {
 
   useMotionValueEvent(progress, 'change', (latest) => {
     const available = latest >= 0.78
+    const cueVisible = latest < 0.006
     setCtaAvailable((current) => current === available ? current : available)
+    setShowScrollCue((current) => current === cueVisible ? current : cueVisible)
   })
 
   if (shouldReduceMotion) {
@@ -212,22 +213,21 @@ export function IntroSection() {
           <p>{sima.intro.traitSequence.join(' ')}</p>
         </div>
 
-        <motion.div
-          style={{ opacity: introducingOpacity, y: introducingY }}
-          className="absolute inset-x-5 z-30 flex justify-center text-center"
-        >
-          <p className="m-0 flex items-center gap-3 rounded-full border border-white/25 bg-black/35 px-6 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_18px_70px_rgba(0,0,0,0.45)] backdrop-blur-md sm:px-7 sm:text-sm">
-            {sima.intro.scrollCue}
-            <motion.span
-              aria-hidden="true"
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1.6, ease: 'easeInOut', repeat: Number.POSITIVE_INFINITY }}
-              className="inline-flex"
-            >
-              <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
-            </motion.span>
-          </p>
-        </motion.div>
+        {showScrollCue && (
+          <div className="absolute inset-x-5 z-30 flex justify-center text-center">
+            <p className="m-0 flex items-center gap-3 rounded-full border border-white/25 bg-black/35 px-6 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-[0_18px_70px_rgba(0,0,0,0.45)] backdrop-blur-md sm:px-7 sm:text-sm">
+              {sima.intro.scrollCue}
+              <motion.span
+                aria-hidden="true"
+                animate={{ y: [0, 5, 0] }}
+                transition={{ duration: 1.6, ease: 'easeInOut', repeat: Number.POSITIVE_INFINITY }}
+                className="inline-flex"
+              >
+                <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
+              </motion.span>
+            </p>
+          </div>
+        )}
 
         <motion.div
           aria-hidden="true"
