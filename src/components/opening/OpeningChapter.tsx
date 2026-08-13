@@ -300,6 +300,7 @@ export function HeroSection() {
     <section
       ref={sectionRef}
       id="hero"
+      tabIndex={-1}
       aria-labelledby="hero-title"
       className="section-pad relative isolate overflow-hidden bg-paper py-24 text-ink sm:py-32 lg:py-40"
     >

@@ -1,4 +1,4 @@
-import { motion, useScroll } from 'framer-motion'
+import { MotionConfig, motion, useScroll } from 'framer-motion'
 import { useLayoutEffect, useState } from 'react'
 import { EasterEggOverlay } from './components/EasterEggOverlay'
 import { GallerySection, SpecificationsSection, AudiSection, LandscapingSection } from './components/editorial/EditorialChapter'
@@ -36,9 +36,16 @@ function App() {
   }
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <a
         href="#hero"
+        onClick={(event) => {
+          event.preventDefault()
+          window.history.replaceState(null, '', '#hero')
+          const hero = document.getElementById('hero')
+          hero?.scrollIntoView({ behavior: 'auto', block: 'start' })
+          hero?.focus({ preventScroll: true })
+        }}
         className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-white px-5 py-3 text-sm font-semibold text-ink shadow-xl transition-transform focus:translate-y-0"
       >
         Перейти до основного вмісту
@@ -66,7 +73,7 @@ function App() {
 
       <MusicPlayer songs={sima.songs} />
       <EasterEggOverlay joke={activeJoke} onClose={() => setActiveJoke(null)} />
-    </>
+    </MotionConfig>
   )
 }
 

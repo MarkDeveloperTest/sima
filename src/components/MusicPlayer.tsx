@@ -21,7 +21,9 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(0.7)
-  const shortViewport = typeof window !== 'undefined' && window.innerHeight <= 450
+  const [shortViewport, setShortViewport] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-height: 450px)').matches,
+  )
 
   const playableSongs = useMemo(() => songs.filter((song) => song.src.trim()), [songs])
   const displayTrack = playableSongs[trackIndex] ?? songs[0]
@@ -34,6 +36,17 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
   }, [volume])
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-height: 450px)')
+    const updateViewport = (event: MediaQueryListEvent) => {
+      setShortViewport(event.matches)
+      if (event.matches) setExpanded(false)
+    }
+
+    mediaQuery.addEventListener('change', updateViewport)
+    return () => mediaQuery.removeEventListener('change', updateViewport)
+  }, [])
+
+  useEffect(() => {
     if (!expanded) return
     const collapseOnScroll = () => setExpanded(false)
     window.addEventListener('scroll', collapseOnScroll, { passive: true, once: true })
@@ -43,11 +56,13 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
   const togglePlayback = async () => {
     const audio = audioRef.current
     if (!audio || !hasAudio) return
-    if (audio.paused) {
-      await audio.play()
-      setPlaying(true)
-    } else {
-      audio.pause()
+    try {
+      if (audio.paused) {
+        await audio.play()
+      } else {
+        audio.pause()
+      }
+    } catch {
       setPlaying(false)
     }
   }
@@ -68,6 +83,8 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
           src={playableSongs[trackIndex]?.src}
           onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
           onLoadedMetadata={(event) => setDuration(event.currentTarget.duration)}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
           onEnded={nextTrack}
           preload="metadata"
         />
@@ -131,15 +148,27 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
           <motion.button
             key="collapsed"
             type="button"
-            onClick={() => setExpanded(true)}
+            onClick={() => {
+              if (shortViewport) {
+                void togglePlayback()
+              } else {
+                setExpanded(true)
+              }
+            }}
             initial={{ opacity: 0, y: 12, scale: 0.94 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.94 }}
-            aria-label="Відкрити музичний плеєр"
+            aria-label={shortViewport ? (playing ? 'Пауза' : 'Відтворити музику') : 'Відкрити музичний плеєр'}
             className="flex min-h-14 items-center gap-3 rounded-full border border-white/25 bg-[#171918]/92 py-2 pl-3 pr-5 text-left text-white shadow-2xl backdrop-blur-xl"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-matcha-300 text-ink">
-              {playing ? <Pause className="h-4 w-4 fill-current" aria-hidden="true" /> : <ListMusic className="h-4 w-4" aria-hidden="true" />}
+              {playing ? (
+                <Pause className="h-4 w-4 fill-current" aria-hidden="true" />
+              ) : shortViewport ? (
+                <Play className="ml-0.5 h-4 w-4 fill-current" aria-hidden="true" />
+              ) : (
+                <ListMusic className="h-4 w-4" aria-hidden="true" />
+              )}
             </span>
             <span>
               <span className="block max-w-36 truncate text-xs font-semibold">{displayTrack?.title ?? 'Музика'}</span>
