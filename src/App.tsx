@@ -1,0 +1,59 @@
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { EasterEggOverlay } from './components/EasterEggOverlay'
+import { GallerySection, SpecificationsSection, AudiSection, LandscapingSection } from './components/editorial/EditorialChapter'
+import { FinaleSection } from './components/finale/FinaleSection'
+import { Level24Section } from './components/finale/Level24Section'
+import { MusicPlayer } from './components/MusicPlayer'
+import { HeroSection, IntroSection, StatsSection } from './components/opening/OpeningChapter'
+import { FaithSection, ImpactSection, LeadershipSection, MentorSection } from './components/story/StoryChapter'
+import { sima, type InsideJoke } from './data/sima'
+import { useScrollProgress } from './hooks/useScrollProgress'
+
+type SecretTrigger = InsideJoke['trigger']
+
+function App() {
+  const progress = useScrollProgress()
+  const [activeJoke, setActiveJoke] = useState<InsideJoke | null>(null)
+
+  const revealSecret = (trigger: SecretTrigger) => {
+    const joke = sima.insideJokes.find((item) => item.trigger === trigger && item.hidden)
+    if (joke) setActiveJoke(joke)
+  }
+
+  return (
+    <>
+      <a
+        href="#hero"
+        className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-white px-5 py-3 text-sm font-semibold text-ink shadow-xl transition-transform focus:translate-y-0"
+      >
+        Перейти до основного вмісту
+      </a>
+
+      <div className="fixed inset-x-0 top-0 z-[80] h-[2px] bg-black/10" aria-hidden="true">
+        <motion.div className="h-full origin-left bg-matcha-400" style={{ scaleX: progress }} />
+      </div>
+
+      <main>
+        <IntroSection />
+        <HeroSection />
+        <StatsSection />
+        <GallerySection onSecret={revealSecret} />
+        <SpecificationsSection />
+        <AudiSection onSecret={revealSecret} />
+        <LandscapingSection />
+        <LeadershipSection />
+        <MentorSection />
+        <ImpactSection />
+        <FaithSection />
+        <Level24Section onSecret={revealSecret} />
+        <FinaleSection />
+      </main>
+
+      <MusicPlayer songs={sima.songs} />
+      <EasterEggOverlay joke={activeJoke} onClose={() => setActiveJoke(null)} />
+    </>
+  )
+}
+
+export default App
