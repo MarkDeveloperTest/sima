@@ -220,16 +220,12 @@ function GalleryCard({ photo, index, onOpen, onSecret }: GalleryCardProps) {
         </span>
       </button>
 
-      <div className={`mt-4 flex items-start justify-between gap-5 ${isFeatured ? 'md:px-1' : ''}`}>
+      <div className={`mt-4 ${isFeatured ? 'md:px-1' : ''}`}>
         <div>
           <p className="text-base font-semibold tracking-[-0.02em] text-ink sm:text-lg">{photo.caption}</p>
           {photo.funnyCaption && (
             <p className="mt-1 text-sm tracking-[-0.01em] text-ink/55">{photo.funnyCaption}</p>
           )}
-        </div>
-        <div className="shrink-0 text-right font-mono text-[9px] uppercase tracking-[0.16em] text-ink/45 sm:text-[10px]">
-          <span className="block">{photo.category}</span>
-          <span className="mt-1 block">{photo.date}</span>
         </div>
       </div>
     </motion.li>
@@ -436,7 +432,7 @@ export function GallerySection({ photos = sima.photos, onSecret }: GallerySectio
         <Reveal className="mb-16 max-w-4xl sm:mb-24 lg:mb-32">
           <h2 className="display-lg text-ink">Сіма.<br />У кадрі.</h2>
           <p className="mt-7 max-w-xl text-base leading-relaxed text-ink/55 sm:ml-auto sm:mt-10 sm:text-lg">
-            Серйозні моменти. Сумнівні рішення. Жодного зайвого контексту.
+            Від молодіжних зустрічей до випадкових селфі — архів Сіми без цензури.
           </p>
         </Reveal>
 
@@ -456,7 +452,7 @@ export function GallerySection({ photos = sima.photos, onSecret }: GallerySectio
             ))}
           </ol>
         ) : (
-          <p className="border-y border-ink/15 py-12 text-lg text-ink/55">Фотографії скоро з’являться.</p>
+          <p className="border-y border-ink/15 py-12 text-lg text-ink/55">Архів Сіми поки порожній.</p>
         )}
       </div>
 
@@ -484,9 +480,9 @@ export function SpecificationsSection({
       <div className="content-shell lg:grid lg:grid-cols-[minmax(0,0.8fr)_minmax(28rem,1.2fr)] lg:gap-20 xl:gap-32">
         <Reveal className="mb-16 lg:mb-0">
           <div className="lg:sticky lg:top-28">
-            <h2 className="display-md max-w-3xl text-ink">Сіма.<br />Характеристики.</h2>
+            <h2 className="max-w-3xl text-[clamp(2.6rem,4.4vw,4rem)] font-semibold leading-[0.96] tracking-[-0.055em] text-ink">Сіма.<br />Характеристики.</h2>
             <p className="mt-7 max-w-sm text-base leading-relaxed text-ink/50 sm:text-lg">
-              24-те покоління. Перевірене друзями. Оновлення тривають.
+              Дата випуску: 14.08.2002. Перевірено друзями, молодіжкою та кілометрами спонтанних маршрутів.
             </p>
           </div>
         </Reveal>
