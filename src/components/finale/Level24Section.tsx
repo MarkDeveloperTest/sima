@@ -1,4 +1,4 @@
-import { Check, ChevronRight, Sprout, TrendingUp } from 'lucide-react'
+import { Check, ChevronRight, Heart, Sprout, TrendingUp } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { sima } from '../../data/sima'
@@ -8,7 +8,7 @@ interface Level24SectionProps {
   onSecret?: (trigger: 'age') => void
 }
 
-const featureIcons = [TrendingUp, TrendingUp, Sprout, Check, TrendingUp, Check]
+const featureIcons = [TrendingUp, TrendingUp, Sprout, Check, TrendingUp, Heart, Check]
 
 export function Level24Section({ onSecret }: Level24SectionProps) {
   const [expanded, setExpanded] = useState(false)
@@ -84,7 +84,7 @@ export function Level24Section({ onSecret }: Level24SectionProps) {
           >
             <ul className="pt-5">
               {sima.level24.features.map((feature, index) => {
-                const Icon = featureIcons[index]
+                const Icon = featureIcons[index] ?? Check
                 return (
                   <motion.li
                     key={feature}
